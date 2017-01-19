@@ -15,7 +15,6 @@ En ambos casos el juego finaliza y puede reiniciarse con la opción del menú re
 
 -Hay una página de About accesibles y una pestaña de Instrucciones accesibles desde la barra de menu.
 
-Previsualizacion:
 Pagina del Github: https://github.com/ervulgaro/Lunar_lander
 
 
