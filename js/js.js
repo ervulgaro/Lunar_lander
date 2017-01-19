@@ -1,75 +1,142 @@
-var y = 10; // altura inicial y0=10%, debe leerse al iniciar si queremos que tenga alturas diferentes dependiendo del dispositivo
+var y = 5;
 var v = 0;
 var g = 1.622;
 var a = g;
 var dt = 0.016683;
-var timer=null;
-var timerFuel=null;
-var fuel=100;
+var timer = null;
+var timerFuel = null;
+var fuel = 100;
+var activo = true;
 
-//al cargar por completo la página...
-window.onload = function(){
-	//definición de eventos
-	//mostrar menú móvil
-    	document.getElementById("showm").onclick = function () {
-		document.getElementsByClassName("c")[0].style.display = "block";
-		stop();
-	}
-	//ocultar menú móvil
-	document.getElementById("hidem").onclick = function () {
-		document.getElementsByClassName("c")[0].style.display = "none";
-		start();
-	}
-	//encender/apagar el motor al hacer click en la pantalla
-	document.onclick = function () {
- 	  if (a==g){
-  		motorOn();
- 	  } else {
-  		motorOff();
- 	  }
-	}
-	//encender/apagar al apretar/soltar una tecla
-	document.onkeydown = motorOn;
-	document.onkeyup = motorOff;
-	
-	//Empezar a mover nave
-	start();
+window.onload = function () {
+
+    document.onkeydown = motorOn;
+    document.onkeyup = motorOff;
+
+    start();
 }
 
-//Definición de funciones
-function start(){
-	timer=setInterval(function(){ moverNave(); }, dt*1000);
+function start() {
+    timer = setInterval(function () { moverNave(); }, dt * 1000);
 }
 
-function stop(){
-	clearInterval(timer);
+function stop() {
+    clearInterval(timer);
+    if (y >= 70) {
+        document.getElementById("imgNave").src = "img/explosion.png";
+    }
 }
 
-function moverNave(){
-	v +=a*dt;
-	document.getElementById("velocidad").innerHTML=v;
-	y +=v*dt;
-	document.getElementById("altura").innerHTML=y;
-	
-	//mover hasta que top sea un 70% de la pantalla
-	if (y<70){ 
-		document.getElementById("nave").style.top = y+"%"; 
-	} else { 
-		stop();
-	}
+function moverNave() {
+    v += a * dt;
+    document.getElementById("velocidad").innerHTML = Math.round(v);
+    y += v * dt;
+    document.getElementById("altura").innerHTML = Math.round(70 - y);
+
+    if (y < 70) {
+        document.getElementById("nave").style.top = y + "%";
+    } else {
+        activo = false;
+        stop();
+        motorOff();
+        document.getElementById("imgNave").src = "img/nave_apagada.png";
+        finalizarJuego();
+        if (v > 5) {
+            document.getElementById("imgNave").src = "img/explosion.png";
+        }
+    }
 }
-function motorOn(){
-	a=-g;
-	if (timerFuel==null)
-	timerFuel=setInterval(function(){ actualizarFuel(); }, 10);	
+
+function motorOn() {
+    if (activo == true) {
+        a = -g;
+        if (timerFuel == null) {
+            timerFuel = setInterval(function () { actualizarAltura(); }, 100);
+            document.getElementById("imgNave").src = "img/nave.png";
+        }
+
+        if (fuel <= 0) {
+            motorOff();
+            document.getElementById("fuel").innerHTML = 0;
+            document.getElementById("imgNave").src = "img/nave.png";
+        }
+        if (y > 70) {
+            motorOff();
+            document.getElementById("fuel").innerHTML = 0;
+            if (v > 5) {
+                document.getElementById("imgNave").src = "img/explosion.png";
+            }
+        }
+    }
 }
-function motorOff(){
-	a=g;
-	clearInterval(timerFuel);
-	timerFuel=null;
+
+function motorOff() {
+    if (activo == true) {
+        a = g;
+        document.getElementById("imgNave").src = "img/nave_apagada.png";
+        clearInterval(timerFuel);
+        timerFuel = null;
+    }
 }
-function actualizarFuel(){
-	//Aquí hay que cambiar el valor del marcador de Fuel...
-	fuel-=0.1;
-	document.getElementById("fuel").innerHTML=fuel;	
+
+function actualizarAltura() {
+    if (activo == true) {
+        fuel -= 1;
+        document.getElementById("fuel").innerHTML = fuel;
+    }
+}
+
+function eventosOff() {
+    document.getElementById("izquierda").style.pointerEvents = 'none';
+    document.getElementById("derecha").style.pointerEvents = 'none';
+}
+
+function eventosOn() {
+    document.getElementById("izquierda").style.pointerEvents = 'auto';
+    document.getElementById("derecha").style.pointerEvents = 'auto';
+}
+
+function reanudar() {
+    activo = true
+    start();
+    document.getElementById("reanudar").style.display = "none";
+    document.getElementById("pausa").style.display = "inline-block";
+}
+
+function pausar() {
+    motorOff();
+    activo = false;
+    stop();
+    document.getElementById("pausa").style.display = "none";
+    document.getElementById("reanudar").style.display = "inline-block";
+}
+
+function reiniciarJuego() {
+    location.reload(true);
+}
+
+function mostrarInstrucciones() {
+    document.getElementById("menuInstrucciones").style.display = "block";
+    pausar();
+    eventosOff();
+    if (v < 5) {
+        document.getElementById("imgNave").src = "img/nave_apagada.png";
+    }
+}
+
+function ocultarInstrucciones() {
+    document.getElementById("menuInstrucciones").style.display = "none";
+    reanudar();
+    eventosOn();
+}
+
+function finalizarJuego() {
+    if (v < 5) {
+        pausar();
+        document.getElementById("imgNave").src = "img/nave_apagada.png";
+        document.getElementById("win").style.display = "inline-block";
+    } else {
+        pausar();
+        document.getElementById("fail").style.display = "inline-block";
+    }
 }

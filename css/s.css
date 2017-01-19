@@ -26,7 +26,7 @@
             
             .d {
                 bottom: -1%;
-                position: fixed;
+                position: absolute;
                 width: 100%;
             }
             
@@ -63,15 +63,54 @@
                 height: 20%;
                 color: red;
             }
+            #cerrar {
+                width: 15%;
+                max-width: 50px;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+            }
             
+            #imgNave {
+                height: 100%;
+                display: block;
+                margin: auto;
+            }
+            
+            #tierra {
+                position: fixed;
+                height: 20%;
+                display: block;
+                margin-top: 2%;
+                margin-left: 15%;
+            }
+            
+            
+            #win {
+                display: none;
+                position: fixed;
+                max-width: 70%;
+                max-height: 70%;
+                margin-top: 40%;
+                margin-left: -15%;
+            }
+            
+            #fail {
+                display: none;
+                position: fixed;
+                max-width: 70%;
+                max-height: 70%;
+                margin-top: 40%;
+                margin-left: -15%;
+            }
             .panel {
                 width: auto;
                 height: auto;
                 max-width: 100px;
                 background-color: red;
-                margin: 20px;
+                margin: 5px;
                 border-style: outset;
-                border-color: red;
+                border-color: darkred;
                 font-size: 100%;
                 padding: 2px;
                 margin-bottom: 15px;
@@ -131,11 +170,11 @@
                 margin-top: 5%;
                 color: black;
                 text-align: center;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 background-image: url("../img/icono_play.PNG");
                 background-repeat: no-repeat;
-                background-size: 100%;
+                background-size: 50%;
                 background-position: 50% 50%;
                 pointer-events: auto;
             }
@@ -155,11 +194,11 @@
                 color: black;
                 text-align: center;
                 font-size: 0%;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 background-image: url("../img/icono_pausa.PNG");
                 background-repeat: no-repeat;
-                background-size: 100%;
+                background-size: 50%;
                 background-position: 50% 50%;
             }
             
@@ -169,8 +208,8 @@
                 display: inline-block;
                 float: right;
                 border-color: darkred;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 font-size: 0%;
                 color: black;
                 text-align: center;
@@ -179,7 +218,7 @@
                 margin-top: 5%;
                 background-image: url("../img/icono_retry.PNG");
                 background-repeat: no-repeat;
-                background-size: 100%;
+                background-size: 50%;
                 background-position: 50% 50%;
             }
             
@@ -195,14 +234,14 @@
                 border-color: darkred;
                 margin: 10px;
                 margin-top: 5%;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 color: black;
                 text-align: center;
                 font-size: 0%;
                 background-image: url("../img/icono_menu.png");
                 background-repeat: no-repeat;
-                background-size: 100%;
+                background-size: 50%;
                 background-position: 50% 50%;
             }
             
@@ -211,14 +250,17 @@
             }
             
             #menuInstrucciones {
-                margin: 5%;
+                position: absolute;
+                left: 0px;
+                top: 0px;
                 background-image: url("../img/fondo.jpg");
                 text-align: center;
                 border-style: outset;
                 position: absolute;
                 display: none;
-                margin-left: 12%;
-                margin-top: 12%;
+                margin-right: 0%;
+                margin-top: 0%;
+                margin-bottom: 0%;
             }
             
             #menuInstrucciones b {
@@ -229,43 +271,4 @@
                 margin: 2%;
             }
             
-            #cerrar {
-                width: 15%;
-                max-width: 50px;
-                position: absolute;
-                top: 2px;
-                right: 2px;
-            }
             
-            #imgNave {
-                height: 100%;
-                display: block;
-                margin: auto;
-            }
-            
-            #tierra {
-                position: fixed;
-                height: 20%;
-                display: block;
-                margin-top: 2%;
-                margin-left: 15%;
-            }
-            
-            
-            #win {
-                display: none;
-                position: fixed;
-                max-width: 50%;
-                max-height: 50%;
-                margin-top: 10%;
-                margin-left: 0%;
-            }
-            
-            #fail {
-                display: none;
-                position: fixed;
-                max-width: 70%;
-                max-height: 70%;
-                margin-top: 10%;
-                margin-left: 5%;
-            }
